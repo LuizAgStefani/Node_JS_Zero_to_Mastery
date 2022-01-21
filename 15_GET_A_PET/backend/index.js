@@ -1,5 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+const compression = require("compression");
+const path = require("path");
+const fs = require("fs");
 
 const app = express();
 
@@ -7,6 +10,8 @@ const conn = require("./db/conn");
 
 // adding dotenv to the project
 require("dotenv").config();
+
+app.use(compression());
 
 // Config JSON response
 app.use(express.json());
