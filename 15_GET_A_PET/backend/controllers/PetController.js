@@ -222,24 +222,19 @@ module.exports = class PetController {
 
     updatedData.color = color;
 
-    if (images.length === 0) {
-      res.status(422).json({
-        message: "A imagem é obrigatória",
-      });
-      return;
-    }
-
     let nomeImagens = "";
 
-    images.map((imagem) => {
-      if (nomeImagens === "") {
-        nomeImagens = imagem.filename;
-      } else {
-        nomeImagens = `${nomeImagens},${imagem.filename}`;
-      }
-    });
-
-    updatedData.images = nomeImagens;
+    if (images.length > 0) {
+      console.log("entrou aqui e vai mudar a imagem");
+      images.map((imagem) => {
+        if (nomeImagens === "") {
+          nomeImagens = imagem.filename;
+        } else {
+          nomeImagens = `${nomeImagens},${imagem.filename}`;
+        }
+      });
+      updatedData.images = nomeImagens;
+    }
 
     Pet.findOne({ where: { id } }).then(async (petFound) => {
       petFound.update(updatedData);
@@ -283,6 +278,5 @@ module.exports = class PetController {
     // }
 
     // add user to pet
-    
   }
 };

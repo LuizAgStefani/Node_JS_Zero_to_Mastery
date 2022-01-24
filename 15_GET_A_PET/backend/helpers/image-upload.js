@@ -1,5 +1,6 @@
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 // Destination to store image
 const imageStorage = multer.diskStorage({
@@ -13,6 +14,11 @@ const imageStorage = multer.diskStorage({
     } else if (req.baseUrl.includes("pets")) {
       folder = "pets";
     }
+
+    if (!fs.existsSync(`public/images/${folder}/`)) {
+      fs.mkdirSync(`public/images/${folder}/`);
+    }
+
     cb(null, `public/images/${folder}/`);
   },
   filename: (req, file, cb) => {
